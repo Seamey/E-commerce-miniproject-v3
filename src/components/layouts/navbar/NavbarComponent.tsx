@@ -7,7 +7,7 @@ import { Button } from "@nextui-org/react";
 import { NavbarMenuItem } from "@nextui-org/react";
 import { navbarItem } from "./menu";
 import { BsCart4 } from "react-icons/bs";
-import { useAppSelector } from "../../../../redux/hooks";
+import { useAppSelector } from "../../../redux/hooks";
 import { useSession, signIn, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation";
 

@@ -2,11 +2,11 @@
 
 import { Card, CardBody, CardFooter, Image, Button } from "@nextui-org/react";
 import { BsCart4 } from "react-icons/bs";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch } from "../../redux/hooks";
 import { CartProductType } from "@/lib/Definition";
 import { useRouter } from "next/navigation";
-import { increment } from "../../../redux/features/counter/counterSlice";
-import { addToCart } from "../../../redux/features/carts/cartSlice";
+import { increment } from "../../redux/features/counter/counterSlice";
+import { addToCart } from "../../redux/features/carts/cartSlice";
 
 export default function CardProduct({
 	id,
