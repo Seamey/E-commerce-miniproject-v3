@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Image from "next/image";
-import { removeFromCart, increment, decrement} from "../../../redux/features/carts/cartSlice"
+import { removeFromCart, increment, decrement } from '@/redux/features/carts/cartSlice';
 import {CartProductType} from "../../lib/Definition"
-import {useAppSelector, useAppDispatch} from "../../../redux/hooks"
+import {useAppSelector, useAppDispatch} from "../../redux/hooks"
 import {useState} from "react";
 
 const CartProduct = ({id, name, price, image}:CartProductType) => {

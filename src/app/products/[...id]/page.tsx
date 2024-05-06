@@ -1,9 +1,9 @@
 "use client"
 
 import React from 'react';
-import { useGetProductByIdQuery } from '../../../../redux/service/product';
-import { addToCart } from '../../../../redux/features/carts/cartSlice';
-import{ useAppDispatch} from '../../../../redux/hooks';
+import { useGetProductByIdQuery } from '../../../redux/service/product';
+import { addToCart } from '../../../redux/features/carts/cartSlice';
+import{ useAppDispatch} from '../../../redux/hooks';
 import Loading from '@/app/loading';
 import ProductDetailComponent from '@/components/cards/ProductDetail';
 import { baseApi } from '@/lib/constants/BaseURL';

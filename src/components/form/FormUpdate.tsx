@@ -8,7 +8,6 @@ import Image from 'next/image'
 import { ACCESS_TOKEN, baseApi } from "../../lib/constants/BaseURL"
 import axios from 'axios';
 import { useEffect,useState } from 'react';
-import { useUpdateProductMutation } from '../../../redux/service/product';
 import ProductsUpdate from '@/types/TypeUpdate';
 
 

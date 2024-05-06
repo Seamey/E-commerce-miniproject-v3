@@ -1,56 +1,3 @@
-// // "use client"
-// import { useSession, signIn, signOut } from "next-auth/react"
-// import Image from "next/image";
-// import HeroSectionComponent from "@/components/layouts/header/HeroSection";
-// import { SignUpComponent } from "@/components/form/SignupForm";
-
-// export default function Home() {
-//  // extracting data from usesession as session
-// //  const { data: session } = useSession()
-// //  // checking if sessions exists
-// //  if (session) {
-// //    // rendering components for logged in users
-// //    return (
-
-// //      <div className="w-full h-screen flex flex-col justify-center items-center">
-// //        <div className="w-44 h-44 relative mb-4">
-// //        <Image src={session.user?.image as string} fill alt="" className="object-cover rounded-full"/></div>
-// //        <p className="text-2xl mb-2">Welcome <span className="font-bold">{session.user?.name}</span>. Signed In As</p>
-// //        <p className="font-bold mb-4">{session.user?.email}</p>
-// //        <button className="bg-red-600 py-2 px-6 rounded-md" onClick={() => signOut()}>Sign out</button></div>) }
-//  return (
-  
-//    <div className="w-full h-screen flex flex-col justify-center items-center"><p className="text-2xl mb-2">Not Signed In</p></div>
-// )}
-    
-       
-//        {/* <button className="bg-blue-600 py-2 px-6 rounded-md text-white mb-2" onClick={() => signIn('google')}>Sign in with google</button>
-//        <button className="bg-none border-gray-300 border py-2 px-6 rounded-md mb-2" onClick={() => signIn('github')}>Sign in with github</button>
-//    </div>)} */}
-
-
-// "usr client"
-// import React from 'react'
-// import { SignUpComponent } from '@/components/form/SignupForm'
-// import HeroSectionComponent from '@/components/layouts/header/HeroSection'
-// import CardComponent from '@/components/cards/CardComponent'
-
-// const page = () => {
-//   return (
-//     <>
-//       <HeroSectionComponent/>
-
-//       {/* <CardComponent 
-//       title={'Hello Babay'}
-//       image={'https://www.pinterest.com/pin/34128909668701114/'}
-//       price={0}
-//        id={0}/> */}
-      
-//     </>
-//   )
-// }
-
-// export default page
 
 import CardProduct from "@/components/cards/CardComponent";
 import { CartProductType } from "@/lib/Definition";
@@ -61,19 +8,22 @@ import { Metadata } from "next";
 import HeroSectionComponent from "@/components/layouts/header/HeroSection";
 import React from "react";
 import {Pagination} from "@nextui-org/react";
-import { warning } from "framer-motion";
-// import { useState } from "react";
+import { useAppDispatch } from "@/redux/hooks";
+import { useGetProductByIdQuery } from "@/redux/service/product";
 import { baseApi } from "@/lib/constants/BaseURL";
-import counterSlice from "../../redux/features/counter/counterSlice";
+import counterSlice from "@/redux/features/counter/counterSlice";
+import { addToCart } from "@/redux/features/carts/cartSlice";
 
-
+export type ParamProps = {
+  params: {
+      id: number;
+  };
+};
 async function fetchProducts(){
   const products = await fetch(`${baseApi}products?page=1&page_size=100 `,{
     cache: "no-store"
   });
   const rest = await products.json();
-  // const filteredProducts = rest.results.filter((product: ProductType) => product.seller === sellerName);
-  // return filteredProducts;
   return rest.results;
 
 }
@@ -85,9 +35,20 @@ export const metadata: Metadata = {
 
 
 
-export default async function Home() {
+export default async function Home({ params }: ParamProps) {
  
   const products = await fetchProducts();
+  const id = params.id;
+  const dispatch = useAppDispatch();
+    const { data: product, error, isLoading } = useGetProductByIdQuery(id);
+
+    if (!product) return <div className='text-center'>No product found.</div>;
+
+    const {name, image, price, desc, category} = product;
+
+    const handleAddToCart = () => {
+        dispatch(addToCart({ id, name, image, price, desc,category }));
+    }
   return (
     <>
     <HeroSectionComponent/>
@@ -100,14 +61,13 @@ export default async function Home() {
     {products.map((product: Products) => (
         <Link href={`/products/${product.id}`} key={product.id}>
             <CardProduct
-
-                key={product.id}
-                id={product.id}
-                name={product.name}
-                category={product.category}
-                image={product.image}
-                price={product.price}
-            />
+                    id={id}
+                    name={name}
+                    price={price}
+                    desc={desc}
+                    image={image}
+                    category={category}
+                    onClick={handleAddToCart} />
         </Link>
     ))}
 

@@ -1,6 +1,6 @@
 "use client";
-import { useAppSelector, useAppDispatch } from "../../../redux/hooks"
-import { selectTotalPrice,selectProducts,selectTotalQuantity } from "../../../redux/features/carts/cartSlice";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks"
+import { selectTotalPrice,selectProducts,selectTotalQuantity } from "../../redux/features/carts/cartSlice";
 import CartProduct from "@/components/carts/CartProduct";
 
 export default function Cart() {

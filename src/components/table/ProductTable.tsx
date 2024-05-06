@@ -29,19 +29,18 @@ type Props = {
 const customStyles = {
 	rows: {
 		style: {
-      // minWidth: "1000px",
-			minHeight: '72px', // override the row height
+			minHeight: '72px', 
 		},
 	},
 	headCells: {
 		style: {
-			paddingLeft: '8px', // override the cell padding for head cells
+			paddingLeft: '8px', 
 			paddingRight: '8px',
 		},
 	},
 	cells: {
 		style: {
-			paddingLeft: '8px', // override the cell padding for data cells
+			paddingLeft: '8px', 
 			paddingRight: '8px',
 		},
 	},

@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import style from "./style.module.css";
 import { IoEyeOffSharp } from "react-icons/io5";
 import { IoEyeSharp } from "react-icons/io5";
-import { setAccessToken } from "../../../../redux/features/auth/authSlice";
+import { setAccessToken } from "../../../redux/features/auth/authSlice";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
