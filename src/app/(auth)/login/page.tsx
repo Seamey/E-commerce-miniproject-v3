@@ -62,13 +62,6 @@ export default function Login() {
 
 	};
 
-	if (loading) {
-		return (
-			<div className={`${style.container}`}>
-				<h1 className="text-6xl text-center">Loading...</h1>
-			</div>
-		);
-	}
 
 	return (
 		<main className={`${style.container}`}>
@@ -129,21 +122,25 @@ export default function Login() {
 						/>
 					</div>
 					{/* button submit */}
-					<button type="submit" className={`${style.button}`}>
+					<div className="flex justify-between items-center">
+					<div>
+					<button type="submit" className={`${style.button}`} onClick={()=>signIn()}>
 						Login
 					</button>
-					<div className="flex m-3">
-					<button className="bg-none border-gray-300 border py-2 px-6 rounded-md mb-2"
+					</div>
+					<div className="flex m-5 gap-5 w-9/10 justify-center ">
+					<button className="bg-none w-20 justify-center border-gray-300 border py-3 px-3 rounded-md mb-2"
 						onClick={() => signIn("google")}
 					>
-						<FaGoogle/>
+						<FaGoogle className="text-center"/>
 					</button>
 					<button
-						className="bg-none border-gray-300 border py-2 px-6 rounded-md mb-2"
+						className="bg-none w-20 justify-center border-gray-300 border py-3 px-3 rounded-md mb-2"
 						onClick={() => signIn("github")}
 					>
 						<FaGithub/>
 					</button>
+					</div>
 					</div>
 					</Form>
 			</Formik>

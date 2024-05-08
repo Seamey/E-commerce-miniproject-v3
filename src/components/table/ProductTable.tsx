@@ -10,6 +10,11 @@ import { Products } from "@/types/product";
 import ProductsUpdate from "@/types/TypeUpdate";
 import { useRouter } from 'next/navigation';
 import { baseApi } from "@/lib/constants/BaseURL";
+import { useGetProductByIdQuery, 
+  useCreateProductMutation, 
+  useDeleteProductMutation,
+  useGetProductsQuery,
+  useUpdateProductMutation } from "@/redux/service/product";
 
 import {
   Dropdown,
@@ -26,6 +31,8 @@ type Props = {
 	},
 	
 }
+
+
 const customStyles = {
 	rows: {
 		style: {
@@ -50,48 +57,41 @@ const ProductTable = () => {
   const router = useRouter();
 
   const [products,setProducts]=useState<Products[]>([])
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState([]);
   const [openModal,setOpenModal]=useState(false)
   const[openModalEdit,setModalProductEdit]=useState(false)
-  const[productEdit,setProductEdit]=useState<ProductsUpdate>()
-  
-  const[buttonDelete,setButtonDelete]=useState(false)
+  // const[productEdit,setProductEdit]=useState<ProductsUpdate>()
+  // const[buttonDelete,setButtonDelete]=useState(false)
   const[productdetail,setProductDetail]=useState<Products>()
  
+  
 
-  useEffect(
-    () =>{
-        fetch(`${baseApi}products/?page=1&page_size=100`)
-      .then(res=>res.json())
-      .then((data)=>
-      { const result=data.results
-        setProducts(result)
-        const isSeller = result.some((pro: { seller: string; }) => pro.seller === 'Seamey Channtha');
-        setButtonDelete(isSeller)
-        
-      })
-      .catch(err=>console.log(err))
-   
-    }
-  ,[])
+  const { data, error, isLoading } = useGetProductsQuery({
+    page: 1,
+    pageSize: 10,
+  });
+  const updateProduct= useUpdateProductMutation();
+  // const getProductById = useGetProductByIdQuery(id)
+
+  const result=data
+  console.log(result)
+  
   const ProductDetail=(product:Products)=>{
     setProductDetail(product)
     setOpenModal(true)
   }
   
 
-  const EditComponent=(product:ProductsUpdate)=>{
+  const EditComponent = async ()=>{
+
+    // updateProduct({
+    //   id:result.id,
+    //   name: result.name,
+      
+      
+    // })
     
-    const id=product.id
-    fetch(`${baseApi}products/${id}/`,{
-      method:'PUT',
-      headers:{
-        'Content-Type':'application/json', 
-        //  'Authorization':`Bearer ${ACCESS_TOKEN}`
-      }})
-      setProducts(products.filter((product)=>product.id!==id))
-    setProductEdit(product)
     setModalProductEdit(true)
     
    }
@@ -205,7 +205,7 @@ const handleDelete=(product:Products)=>{
       setFilter(response.results);
     }
     fetchData();
-    setIsLoading(false);
+    // setIsLoading(false);
   }, []);
 
 
@@ -230,7 +230,7 @@ const handleDelete=(product:Products)=>{
         customStyles={customStyles}
         data={filter}
         actions={
-          <Button as={Link} size="sm" color="primary"  href="/dashboard/createNew" variant="flat" >
+          <Button as={Link} size="sm" color="primary"  href="/dashboard/create" variant="flat" >
             Create New
           </Button>
        

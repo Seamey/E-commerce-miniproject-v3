@@ -11,6 +11,9 @@ export const productApi = ecommerceApi.injectEndpoints({
         getProductById: builder.query<any, number>({
                 query: (id) => `/api/products/${id}/`,
         }),
+        getProductBySeller: builder.query<any, string>({
+            query: (seller) => `/api/products/${seller}/`,
+    }),
         createProduct: builder.mutation<any, { newProduct: object, accessToken: string }>({
             query: ({ newProduct, accessToken }) => ({
                 url: "/api/products/",
@@ -29,9 +32,9 @@ export const productApi = ecommerceApi.injectEndpoints({
             }),
         }),
         // delete a product
-        deleteProduct: builder.mutation<any, { id: number; accessToken: string }>({
-            query: ({ id, accessToken }) => ({
-                url: `/api/products/${id}/`,
+        deleteProduct: builder.mutation<any, { seller: string; accessToken: string }>({
+            query: ({ seller, accessToken }) => ({
+                url: `/api/products/${seller}/`,
                 method: "DELETE",
             }),
         }),
@@ -44,4 +47,6 @@ export const {
     useCreateProductMutation,
     useUpdateProductMutation,
     useDeleteProductMutation,
+    useGetProductBySellerQuery,
+    
 } = productApi

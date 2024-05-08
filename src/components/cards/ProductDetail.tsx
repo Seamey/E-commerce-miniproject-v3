@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import { CartProductType } from "@/lib/Definition";
-import { useAppDispatch } from "../../../redux/hooks";
-import { increment } from "../../../redux/features/counter/counterSlice";
-import { addToCart } from "../../../redux/features/carts/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
+import { increment } from "@/redux/features/counter/counterSlice";
+import { addToCart } from "@/redux/features/carts/cartSlice";
 
 const ProductDetailComponent = ({
   id,

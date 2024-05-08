@@ -9,12 +9,14 @@ import { navbarItem } from "./menu";
 import { BsCart4 } from "react-icons/bs";
 import { useAppSelector } from "../../../redux/hooks";
 import { useSession, signIn, signOut } from "next-auth/react"
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function NavbarComponent() {
+  const pathname = usePathname()
   const route = useRouter()
   const add = useAppSelector((state) => state.counter.value)
   const { data: session } = useSession()
+ 
   if (session) {
     return (
       <Navbar>
@@ -84,7 +86,8 @@ export default function NavbarComponent() {
       </Navbar>
     );
   }
-  return (
+ 
+     return (
     <Navbar>
       <NavbarBrand>
         <Image
@@ -127,4 +130,6 @@ export default function NavbarComponent() {
       </NavbarContent>
     </Navbar>
   );
+  
+ 
 }
